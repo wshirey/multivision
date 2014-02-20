@@ -1,10 +1,18 @@
 var express = require('express'),
-    stylus = require('stylus');
+    stylus = require('stylus'),
+    path = require('path'),
+    mongoose = require('mongoose');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var app = express(),
-    path = require('path');
+var app = express();
+
+mongoose.connect('mongodb://localhost/multivision');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error...'));
+db.once('open', function callback() {
+  console.log('multivision db opened');
+});
 
 app.configure(function() {
   app.set('views', __dirname + '/server/views');
