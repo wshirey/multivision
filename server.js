@@ -1,12 +1,18 @@
-var express = require('express');
+var express = require('express'),
+    stylus = require('stylus');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var app = express();
+var app = express(),
+    path = require('path');
 
 app.configure(function() {
   app.set('views', __dirname + '/server/views');
   app.set('view engine', 'jade');
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(require('stylus').middleware(path.join(__dirname, '/public')));
+  app.use(express.static(path.join(__dirname, '/public')));
 });
 
 app.get('*', function(req, res) {
