@@ -6,7 +6,4 @@ angular.module('app', ['ngResource', 'ngRoute'])
         templateUrl: '/partials/main',
         controller: 'MainCtrl'
       });
-  })
-  .controller('MainCtrl', function($scope) {
-    $scope.myVar = "Hello Angular";
   });
