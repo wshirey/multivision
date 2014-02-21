@@ -3,9 +3,7 @@ module.exports = function(app, passport) {
     res.render('../../public/app/' + req.params);
   });
 
-  app.post('/login', function(req, res, next) {
-    passport.auth(req, res, next);
-  });
+  app.post('/login', passport.auth);
 
   app.get('*', function(req, res) {
     res.render('index');
