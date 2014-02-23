@@ -1,9 +1,11 @@
-module.exports = function(app, passport) {
+var auth = require('./auth');
+
+module.exports = function(app) {
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params);
   });
 
-  app.post('/login', passport.auth);
+  app.post('/login', auth.authenticate);
 
   app.post('/logout', function (req, res) {
     req.logout();

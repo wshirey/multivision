@@ -1,9 +1,9 @@
 var passport = require('passport'),
     mongoose = require('mongoose'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    User = mongoose.model('User');
 
 module.exports = function() {
-  var User = mongoose.model('User');
   passport.use(new LocalStrategy(
     function(username, password, done) {
       console.log('passport.use');
@@ -25,17 +25,4 @@ module.exports = function() {
       done(err, user);
     });
   });
-
-  return {
-    auth: function(req, res, next) {
-      passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err); }
-        if (!user) { return res.send({success: false}); }
-        req.logIn(user, function(err) {
-          if (err) { return next(err); }
-          return res.send({success: true, user: user});
-        });
-      })(req, res, next);
-    }
-  }
 };
