@@ -1,4 +1,4 @@
-angular.module('app').controller('MainCtrl', function($scope) {
+angular.module('app').controller('mvMainCtrl', function($scope) {
   $scope.courses = [
     {name: 'Course 1',  featured: true,  published: new Date('02/20/2014')},
     {name: 'Course 2',  featured: true,  published: new Date('01/20/2014')},
