@@ -8,8 +8,10 @@ module.exports = function() {
     function(username, password, done) {
       console.log('passport.use');
       User.findOne({ username: username }, function(err, user) {
-        if (err) { return done(err); }
-        return done(null, user || false);
+        if (user && user.authenticate(password))
+          return done(null, user);
+        else
+          return done(null, false);
       });
     }
   ));
