@@ -5,6 +5,11 @@ module.exports = function(app, passport) {
 
   app.post('/login', passport.auth);
 
+  app.post('/logout', function (req, res) {
+    req.logout();
+    res.end();
+  });
+
   app.get('*', function(req, res) {
     res.render('index');
   });
