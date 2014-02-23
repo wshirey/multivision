@@ -16,7 +16,8 @@ var userSchema = mongoose.Schema({
   lastName: String,
   username: String,
   salt: String,
-  hashed_pwd: String
+  hashed_pwd: String,
+  roles: [String]
 });
 
 userSchema.methods = {
@@ -36,7 +37,8 @@ User.find({}).remove(function() {
     lastName: 'Shirey',
     username: 'wshirey',
     salt: salt,
-    hashed_pwd: hash
+    hashed_pwd: hash,
+    roles: ['admin']
   });
 
   salt = createSalt();
@@ -46,7 +48,8 @@ User.find({}).remove(function() {
     lastName: 'Namath',
     username: 'joe',
     salt: salt,
-    hashed_pwd: hash
+    hashed_pwd: hash,
+    roles: []
   });
 
 
