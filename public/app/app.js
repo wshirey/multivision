@@ -23,5 +23,6 @@ angular.module('app', ['ngResource', 'ngRoute'])
       if (rejection === 'not authorized') {
         $location.path('/');
       }
-    })
-  })
+    });
+  });
+ 
