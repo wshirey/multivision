@@ -15,7 +15,7 @@ exports.createUser = function(req, res, next) {
   User.create(userData, function(err, user) {
     if (err) {
       if (err.toString().indexOf('E11000') > -1) {
-        err = new Error('Username already exists!');
+        err = new Error('Email address already taken!');
       }
       res.status(400);
       return res.send({reason:err.toString()});
@@ -26,3 +26,27 @@ exports.createUser = function(req, res, next) {
     });
   });
 };
+
+exports.updateUser = function (req, res) {
+  var userUpdates = req.body;
+  if (req.user._id != userUpdates._id && !req.user.hasRole('admin')) {
+    res.status(403);
+    return res.end();
+  }
+
+  req.user.firstName = userUpdates.firstName;
+  req.user.lastName = userUpdates.lastName;
+  req.user.username = userUpdates.username;
+
+  if (userUpdates.password && userUpdates.password.length > 0) {
+    req.user.salt = encrypt.createSalt();
+    req.user.hashed_pwd = encrypt.hashPwd(salt, userUpdates.password);
+  }
+  req.user.save(function(err) {
+    if (err) { 
+      res.status(400);
+      return res.send({reason:err.toString()});
+    }
+    res.send(req.user);
+  });
+}

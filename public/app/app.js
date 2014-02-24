@@ -3,6 +3,9 @@ angular.module('app', ['ngResource', 'ngRoute'])
     var routeRoleChecks = {
       admin: { auth: function (mvAuth) {
        return mvAuth.authorizeCurrentUserForRoute('admin');
+      }},
+      user: { auth: function (mvAuth) {
+       return mvAuth.authorizeAuthenticatedUserForRoute();
       }}
     };
 
@@ -18,6 +21,10 @@ angular.module('app', ['ngResource', 'ngRoute'])
       }).when('/signup', {
         templateUrl: '/partials/account/signup',
         controller: 'mvSignupCtrl'
+      }).when('/profile', {
+        templateUrl: '/partials/account/profile',
+        controller: 'mvProfileCtrl',
+        resolve: routeRoleChecks.user
       });
   });
 
