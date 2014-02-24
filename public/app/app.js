@@ -15,6 +15,9 @@ angular.module('app', ['ngResource', 'ngRoute'])
         templateUrl: '/partials/admin/users-list',
         controller: 'mvUserListCtrl',
         resolve: routeRoleChecks.admin
+      }).when('/signup', {
+        templateUrl: '/partials/account/signup',
+        controller: 'mvSignupCtrl'
       });
   });
 

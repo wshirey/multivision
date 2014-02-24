@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    crypto = require('crypto');
+    encrypt = require('../utilities/encryption');
 
 module.exports = function(config) {
   mongoose.connect(config.db);
@@ -22,7 +22,7 @@ var userSchema = mongoose.Schema({
 
 userSchema.methods = {
   authenticate: function(passwordToMatch) {
-    return hashPwd(this.salt, passwordToMatch) === this.hashed_pwd;
+    return encrypt.hashPwd(this.salt, passwordToMatch) === this.hashed_pwd;
   }
 };
 
@@ -30,8 +30,8 @@ var User = mongoose.model('User', userSchema);
 
 User.find({}).remove(function() {
   var salt, hash;
-  salt = createSalt();
-  hash = hashPwd(salt, 'wshirey');
+  salt = encrypt.createSalt();
+  hash = encrypt.hashPwd(salt, 'wshirey');
   User.create({
     firstName: 'Wally',
     lastName: 'Shirey',
@@ -41,8 +41,8 @@ User.find({}).remove(function() {
     roles: ['admin']
   });
 
-  salt = createSalt();
-  hash = hashPwd(salt, 'joe');
+  salt = encrypt.createSalt();
+  hash = encrypt.hashPwd(salt, 'joe');
   User.create({
     firstName: 'Joe',
     lastName: 'Namath',
@@ -53,8 +53,8 @@ User.find({}).remove(function() {
   });
 
 
-  salt = createSalt();
-  hash = hashPwd(salt, 'pele');
+  salt = encrypt.createSalt();
+  hash = encrypt.hashPwd(salt, 'pele');
   User.create({
     firstName: 'Pelé',
     lastName: 'Nascimiento',
@@ -63,12 +63,3 @@ User.find({}).remove(function() {
     hashed_pwd: hash
   });
 });
-
-function createSalt() {
-  return crypto.randomBytes(128).toString('base64');
-}
-
-function hashPwd(salt, pwd) {
-  var hmac = crypto.createHmac('sha1', salt);
-  return hmac.update(pwd).digest('hex');
-}
