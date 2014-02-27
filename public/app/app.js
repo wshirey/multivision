@@ -25,6 +25,9 @@ angular.module('app', ['ngResource', 'ngRoute'])
         templateUrl: '/partials/account/profile',
         controller: 'mvProfileCtrl',
         resolve: routeRoleChecks.user
+      }).when('/courses', {
+        templateUrl: '/partials/courses/course-list',
+        controller: 'mvCourseListCtrl'
       });
   });
 
