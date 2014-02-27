@@ -10,6 +10,7 @@ module.exports = function(app) {
   app.put('/api/users', users.updateUser);
 
   app.get('/api/courses', courses.list);
+  app.get('/api/courses/:id', courses.detail);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params);

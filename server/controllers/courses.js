@@ -5,3 +5,9 @@ exports.list = function(req, res) {
     res.send(collection);
   });
 };
+
+exports.detail = function (req, res) {
+  Course.findById(req.params.id, function (err, course) {
+    res.send(course);
+  });
+};
